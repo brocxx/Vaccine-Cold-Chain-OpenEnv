@@ -197,6 +197,7 @@ def run_task(task: str) -> dict:
         # Get final state for score
         final_state = call_env("GET", "/state")
         score = final_state.get("final_reward", 0.0)
+        score = max(0.01, min(0.99, score))
         
         # Thresholds from requirements: easy >= 0.5, medium >= 0.2, hard >= 0.1
         threshold = 0.1
