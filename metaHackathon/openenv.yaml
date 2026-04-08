@@ -1,0 +1,46 @@
+name: vaccine_cold_chain
+version: "1.0.0"
+entry_point: "server.app:create_app"
+description: >
+  An AI agent manages a 3-node vaccine cold chain over up to 72 simulated hours.
+  Each hour the agent takes actions to ensure vaccines reach outreach sessions
+  without spoiling. Tasks range from trivial stock transfers (Easy) to multi-constraint
+  planning under uncertainty (Hard) with floods, lying sensors, and unknown truck arrivals.
+
+tasks:
+  - id: easy
+    description: "Transfer 80+ vials from warehouse to center_a before hour 24 outreach."
+    difficulty: easy
+    max_steps: 48
+
+  - id: medium
+    description: "Handle generator crisis at center_a while ensuring center_b outreach at hour 24."
+    difficulty: medium
+    max_steps: 48
+
+  - id: hard
+    description: "Two simultaneous outreaches, flood, lying sensor, unknown truck. Information-seeking required."
+    difficulty: hard
+    max_steps: 72
+
+observation_space:
+  type: object
+  description: "Per-node vial counts, temperatures, generator status, plus global road/outreach state."
+
+action_space:
+  type: discrete_with_params
+  actions:
+    - transfer_stock
+    - request_fuel
+    - cancel_outreach
+    - check_truck_status
+    - do_nothing
+
+reward_range: [-10.0, 2.0]
+
+tags:
+  - healthcare
+  - logistics
+  - planning
+  - uncertainty
+  - real-world
