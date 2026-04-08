@@ -362,7 +362,8 @@ class VaccineColdChainEnv:
             coverage_score = self._vials_delivered / max(1, self._vials_at_start)
             waste_penalty = 0.3 * (self._vials_spoiled / max(1, self._vials_at_start))
             missed_penalty = 0.5 * (sessions_missed / max(1, self._sessions_total))
-            final_reward = max(0.0, coverage_score - waste_penalty - missed_penalty)
+            score = coverage_score - waste_penalty - missed_penalty
+            final_reward = max(0.001, min(0.999, score))
 
         return VaccineState(
             episode_id=self._episode_id,
@@ -482,7 +483,8 @@ class VaccineColdChainEnv:
         coverage = self._vials_delivered / max(1, self._vials_at_start)
         waste = 0.3 * (self._vials_spoiled / max(1, self._vials_at_start))
         missed = 0.5 * (sessions_missed / max(1, self._sessions_total))
-        return max(0.0, coverage - waste - missed)
+        score = coverage - waste - missed
+        return max(0.001, min(0.999, score))
 
     def _get_outreach_vials_needed(self) -> int:
         """Return the vials_needed for the active outreach session(s)."""
