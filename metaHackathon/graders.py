@@ -16,7 +16,7 @@ def grade_easy(state: VaccineState) -> float:
     Penalty for waste.
     """
     if state.final_reward is not None:
-        return round(min(1.0, max(0.0, state.final_reward)), 4)
+        return round(min(0.999, max(0.001, state.final_reward)), 4)
 
     # Compute manually if state captured mid-episode
     total = max(1, state.vials_available_at_start)
@@ -24,7 +24,7 @@ def grade_easy(state: VaccineState) -> float:
     waste = 0.3 * (state.vials_spoiled / total)
     missed = 0.5 * ((state.outreach_sessions_total - state.outreach_sessions_completed)
                     / max(1, state.outreach_sessions_total))
-    return round(max(0.0, min(1.0, coverage - waste - missed)), 4)
+    return round(max(0.001, min(0.999, coverage - waste - missed)), 4)
 
 
 def grade_medium(state: VaccineState) -> float:
@@ -36,14 +36,14 @@ def grade_medium(state: VaccineState) -> float:
     Bonus: did not let generator-caused spoilage reduce score.
     """
     if state.final_reward is not None:
-        return round(min(1.0, max(0.0, state.final_reward)), 4)
+        return round(min(0.999, max(0.001, state.final_reward)), 4)
 
     total = max(1, state.vials_available_at_start)
     coverage = state.vials_delivered / total
     waste = 0.3 * (state.vials_spoiled / total)
     missed = 0.5 * ((state.outreach_sessions_total - state.outreach_sessions_completed)
                     / max(1, state.outreach_sessions_total))
-    return round(max(0.0, min(1.0, coverage - waste - missed)), 4)
+    return round(max(0.001, min(0.999, coverage - waste - missed)), 4)
 
 
 def grade_hard(state: VaccineState) -> float:
@@ -57,14 +57,14 @@ def grade_hard(state: VaccineState) -> float:
     but hard task inherently rewards information-seeking behaviour.
     """
     if state.final_reward is not None:
-        return round(min(1.0, max(0.0, state.final_reward)), 4)
+        return round(min(0.999, max(0.001, state.final_reward)), 4)
 
     total = max(1, state.vials_available_at_start)
     coverage = state.vials_delivered / total
     waste = 0.3 * (state.vials_spoiled / total)
     missed = 0.5 * ((state.outreach_sessions_total - state.outreach_sessions_completed)
                     / max(1, state.outreach_sessions_total))
-    return round(max(0.0, min(1.0, coverage - waste - missed)), 4)
+    return round(max(0.001, min(0.999, coverage - waste - missed)), 4)
 
 
 GRADERS = {
