@@ -1,3 +1,12 @@
+---
+title: Vaccine Cold Chain OpenEnv
+emoji: 💉
+colorFrom: blue
+colorTo: red
+sdk: docker
+app_port: 8000
+---
+
 # 💉 Vaccine Cold Chain — OpenEnv Environment
 
 An AI agent manages a **3-node vaccine cold chain** over up to 72 simulated hours.
