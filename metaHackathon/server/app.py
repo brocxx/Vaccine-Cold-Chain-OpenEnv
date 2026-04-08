@@ -158,8 +158,10 @@ def health():
 
 
 @app.post("/reset", response_model=VaccineObservation)
-def reset(req: ResetRequest):
+def reset(req: ResetRequest | None = None):
     global _env
+    if req is None:
+        req = ResetRequest(task="easy")
     if req.task not in ("easy", "medium", "hard"):
         raise HTTPException(400, f"task must be one of: easy, medium, hard")
     _env = VaccineColdChainEnv(task=req.task)
